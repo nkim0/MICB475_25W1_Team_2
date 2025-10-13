@@ -1,0 +1,9 @@
+# demultiplexing data using manifest.txt and output into demux_seqs.qza
+qiime tools import \--
+type "SampleData[SequencesWithQuality]" \
+--input-format SingleEndFastqManifestPhred33V2 \
+--input-path /datasets/project_2/smoking/plco/manifest.txt \
+--output-path ./demux_seqs.qza
+
+# create qzv file for graphing demultiplexed file
+qiime demux summarize \--i-data demux_seqs.qza \--o-visualization demux_seqs.qzv
