@@ -7,3 +7,6 @@ type "SampleData[SequencesWithQuality]" \
 
 # create qzv file for graphing demultiplexed file
 qiime demux summarize \--i-data demux_seqs.qza \--o-visualization demux_seqs.qzv
+
+# download demux_seqs.qzv to visualize and choose right trimming parameters
+scp root@XX.XX.XX.XX:/data/smoking_data/demux_seqs.qzv .
