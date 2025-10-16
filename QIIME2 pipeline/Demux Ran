@@ -1,3 +1,5 @@
+cd ../data/smoking_data
+
 # demultiplexing data using manifest.txt and output into demux_seqs.qza
 qiime tools import \--
 type "SampleData[SequencesWithQuality]" \
@@ -10,3 +12,5 @@ qiime demux summarize \--i-data demux_seqs.qza \--o-visualization demux_seqs.qzv
 
 # download demux_seqs.qzv to visualize and choose right trimming parameters
 scp root@XX.XX.XX.XX:/data/smoking_data/demux_seqs.qzv .
+
+
