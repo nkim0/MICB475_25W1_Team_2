@@ -1,4 +1,4 @@
-cd ../data/smoking_data
+/data/smoking_data
 
 # demultiplexing data using manifest.txt and output into demux_seqs.qza
 qiime tools import \--
