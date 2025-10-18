@@ -13,4 +13,10 @@ qiime demux summarize \--i-data demux_seqs.qza \--o-visualization demux_seqs.qzv
 # download demux_seqs.qzv to visualize and choose right trimming parameters
 scp root@XX.XX.XX.XX:/data/smoking_data/demux_seqs.qzv .
 
-
+# Denoising and truncating file
+qiime dada2 denoise-single \
+--i-demultiplexed-seqs demux_seqs.qza \
+--p-trim-left 0 \--p-trunc-len 436 \
+--o-representative-sequences rep-seqs.qza \
+--o-table table.qza \
+--o-denoising-stats stats.qza
