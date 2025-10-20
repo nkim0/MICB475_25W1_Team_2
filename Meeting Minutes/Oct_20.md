@@ -49,14 +49,14 @@ How does alcohol consumption affect taxonomic and functional diversity in the or
 *Don’t have to stick to these aims for the final project if we don’t want to!
 
 **Functional analysis discussion:**
-Use Picrest (?)
-CAN’T use words like expression because we are looking at DNA, not RNA
-Looking at the POTENTIAL of the community but we are not actually proving that those functions are actually occurring
-We’re only using 16S rRNA
-Issue with 16s is resolution and how specific the microbe is (ie. species, genus, strain, family)
-Does not resolve past the genus
-Don’t know the strains meaning we can’t determine the function
-Ie. E. coli strains can do very different things
+- Use Picrest (?)
+- CAN’T use words like expression because we are looking at DNA, not RNA
+  - Looking at the POTENTIAL of the community but we are not actually proving that those functions are actually occurring
+  - We’re only using 16S rRNA
+- Issue with 16s is resolution and how specific the microbe is (ie. species, genus, strain, family)
+  - Does not resolve past the genus
+  - Don’t know the strains meaning we can’t determine the function
+    - Ie. E. coli strains can do very different things
 
 *Say that there is the potential for these functions or the FUNCTIONAL POTENTIAL of the community!
 Also use the word REPRESENTATION
