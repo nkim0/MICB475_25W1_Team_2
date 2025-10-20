@@ -1,5 +1,5 @@
 **Research Question**
-How does alcohol consumption cause changes within the oral microbial biome across smoking status?
+How does alcohol consumption affect taxonomic and functional diversity in the oral microbial biome across smoking status?
 
 **Aims:**
 
