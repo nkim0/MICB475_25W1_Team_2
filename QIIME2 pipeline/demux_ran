@@ -20,3 +20,8 @@ qiime dada2 denoise-single \
 --o-representative-sequences rep-seqs.qza \
 --o-table table.qza \
 --o-denoising-stats stats.qza
+
+# creating feature table
+qiime feature-table summarize \
+--i-table table.qza \
+--o-visualization HG_table.qzv
