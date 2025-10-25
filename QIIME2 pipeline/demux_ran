@@ -25,3 +25,8 @@ qiime dada2 denoise-single \
 qiime feature-table summarize \
 --i-table table.qza \
 --o-visualization HG_table.qzv
+
+#Visualizing ASVs
+qiime feature-table tabulate-seqs \
+--i-data rep-seqs.qza \
+--o-visualization rep-seqs.qzv
