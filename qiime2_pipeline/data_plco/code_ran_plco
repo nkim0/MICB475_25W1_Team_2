@@ -1,0 +1,38 @@
+# demultiplexing data using manifest.txt and output into demux_seqs.qza
+qiime tools import \
+--type "SampleData[SequencesWithQuality]" \
+--input-format SingleEndFastqManifestPhred33V2 \
+--input-path /datasets/project_2/smoking/plco/manifest.txt \
+--output-path ./demux_seqs_plco.qza
+
+
+# create qzv file for graphing demultiplexed file
+
+qiime demux summarize \
+--i-data demux_seqs_cpsII.qza \
+--o-visualization demux_seqs_cpsII.qzv
+
+# download demux_seqs.qzv to visualize and choose right trimming parameters
+scp root@XX.XX.XX.XX:/data/smoking_data/demux_seqs_plco.qzv .
+
+# Denoising and truncating file
+qiime dada2 denoise-single \
+--i-demultiplexed-seqs demux_seqs_plco.qza \
+--p-trim-left 0 \--p-trunc-len 436 \
+--o-representative-sequences rep-seqs_plco.qza \
+--o-table table_plco.qza \
+--o-denoising-stats stats_plco.qza
+
+# creating feature table
+qiime feature-table summarize \
+--i-table table_plco.qza \
+--o-visualization HG_table_plco.qzv
+
+
+# download demux files
+scp root@XX.XX.XX.XX:/data/smoking_data/HG_table_plco.qzv .
+
+#Visualizing ASVs
+qiime feature-table tabulate-seqs \
+--i-data rep-seqs_plco.qza \
+--o-visualization rep-seqs_plco.qzv
