@@ -1,4 +1,4 @@
-**Nov 3 Minute Minutes**
+**Nov 3 Meeting Minutes**
 
 Found out that cancer referred to both HNC and pancreatic cancer
 
