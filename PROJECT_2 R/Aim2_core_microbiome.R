@@ -2,6 +2,7 @@ library(phyloseq)
 library(microbiome)
 library(ggVennDiagram)
 
+# load objects
 load(file = "phylseq_files.RData")
 
 # get the name of each analysis group
@@ -33,8 +34,10 @@ core_microbiome_plot <- ggVennDiagram(x=list(
   "Cancer, No Risk" = core_cancer_no_risk,
   "No Cancer, Low Risk" = core_control_low_risk,
   "No Cancer, No Risk" = core_control_no_risk
-),label_alpha = 0) +
-  ggplot2::scale_fill_distiller(direction = 1)
+),label_alpha = 0, set_size=4) +
+  ggplot2::scale_fill_distiller(direction = 1) +
+  theme_void() +
+  scale_x_continuous(expand = expansion(mult = 0.2))
 core_microbiome_plot
 
 # Check number of samples for all 4 subsetted groups
@@ -65,16 +68,16 @@ test_microbiome_plot <- ggVennDiagram(x=list(
   "Cancer, No Risk" = test_core_cancer_no_risk,
   "No Cancer, Low Risk" = test_core_control_low_risk,
   "No Cancer, No Risk" = test_core_control_no_risk
-),label_alpha = 0) +
-  ggplot2::scale_fill_distiller(direction = 1)
+),label_alpha = 0, set_size=4) +
+  ggplot2::scale_fill_distiller(direction = 1) +
+  theme_void() +
+  scale_x_continuous(expand = expansion(mult = 0.2))
 test_microbiome_plot
 
-
-# saving graphs 
+# save plots
 ggsave("microbiome_plco.png",
        core_microbiome_plot,
        height = 4, width = 6)
-
 ggsave("microbiome_cpsII.png",
        test_microbiome_plot,
        height = 4, width = 6)
