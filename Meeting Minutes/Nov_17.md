@@ -9,10 +9,10 @@ Diversity
   - worth trying unweighted as well
 
 Core Microbiome
-- try at level higher than ASVs
+- try at level higher than ASVs - ex. genus level instead of ASVs
 - Core microbiome analysis seems meaningless
   - something is off because everything is 100% off from each other
-- Something seems off, may have to be 0% stringent for core microbiome
+- may have to be 0% stringent for core microbiome
  
 Indicator Species Analysis
 - see how many are unique to each group
