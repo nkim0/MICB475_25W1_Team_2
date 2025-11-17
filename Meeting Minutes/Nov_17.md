@@ -21,9 +21,12 @@ Indicator Species Analysis
 Deseq
 - everything is downregulated compared to the control (no cancer, no risk alcohol)
 
+For next week:
 1) Try taxonomic bar plots
 2) reproduce the graphs in our data paper
 3) no significant taxonomic difference as of right now, so try functional analysis
+4) Start on the functional analysis and start on the slides and make a story
+5) Simple is better for slides!!
 
 * Think about functional analysis because we see no significance
 * Try to see if there's anything wrong with the dataset, run the functional analysis, pause on the classifier?
