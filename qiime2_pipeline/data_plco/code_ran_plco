@@ -36,3 +36,58 @@ scp root@XX.XX.XX.XX:/data/smoking_data/HG_table_plco.qzv .
 qiime feature-table tabulate-seqs \
 --i-data rep-seqs_plco.qza \
 --o-visualization rep-seqs_plco.qzv
+
+#replace primer sequences with your correct sequences
+#replace trunc-len with the one you defined in your denoising step
+qiime feature-classifier extract-reads \
+  --i-sequences /datasets/classifiers/silva_ref_files/silva-138-99-seqs.qza \
+  --p-f-primer GGAGGCAGCAGTRRGGAAT \
+  --p-r-primer CTACCRGGGTATCTAATCC \
+  --p-trunc-len 436 \
+  --o-reads ref-seqs-trimmed_plco.qza
+
+# Train classifier with your new ref-seq file
+qiime feature-classifier fit-classifier-naive-bayes \
+--i-reference-reads ref-seqs-trimmed_plco.qza \
+--i-reference-taxonomy /datasets/classifiers/silva_ref_files/silva-138-99-tax.qza \
+--o-classifier classifier_plco.qza
+
+# Use the trained classifier to assign taxonomy to your reads (rep-seqs.qza)
+qiime feature-classifier classify-sklearn \
+--i-classifier classifier_plco.qza \
+--i-reads rep-seqs_plco.qza \
+--o-classification taxonomy_plco.qza
+
+# visualizing taxonomy 
+qiime metadata tabulate \
+--m-input-file taxonomy_plco.qza \
+--o-visualization taxonomy_plco.qzv
+
+# taxonomy-based filtering mitochondria and chloroplast
+qiime taxa filter-table \
+--i-table table_plco.qza \
+--i-taxonomy taxonomy_plco.qza \
+--p-exclude mitochondria,chloroplast \
+--o-filtered-table table-no-mitochondria-no-chloroplast_plco.qza
+
+#Filtering features with less than 5
+qiime feature-table filter-features \
+--i-table table-no-mitochondria-no-chloroplast_plco.qza \
+--p-min-frequency 6 \
+--o-filtered-table filtered-feature-table_plco.qza
+
+# Generate a tree for phylogenetic diversity analyses
+qiime phylogeny align-to-tree-mafft-fasttree \
+--i-sequences rep-seqs_plco.qza \
+--o-alignment aligned-rep-seqs_plco.qza \
+--o-masked-alignment masked-aligned-rep-seqs_plco.qza \
+--o-tree unrooted-tree_plco.qza \
+--o-rooted-tree rooted-tree_plco.qza
+
+# rarefy to depth of XXXX
+qiime diversity alpha-rarefaction \
+  --i-table table_plco.qza \
+  --i-phylogeny rooted-tree_plco.qza \
+  --p-max-depth 4898 \
+  --m-metadata-file /datasets/project_2/smoking/plco/metadata.txt  \
+  --o-visualization alpha-rarefaction_plco.qzv
