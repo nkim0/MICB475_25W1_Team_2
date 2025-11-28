@@ -60,9 +60,9 @@ meta_plco <- meta_plco |>
   filter((hostgender == "female" & host_ETHA_GRAMS_PER_DAY <= 26.9) |
            (hostgender == "male" & host_ETHA_GRAMS_PER_DAY <= 53.8)) |>
   mutate(host_alc_category = case_when(
-    host_ETHA_GRAMS_PER_DAY == 0 ~ "no_risk",
-    hostgender == "male" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 53.8 ~ "low_risk",
-    hostgender == "female" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 26.9 ~ "low_risk")) |>
+    host_ETHA_GRAMS_PER_DAY == 0 ~ "no",
+    hostgender == "male" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 53.8 ~ "yes",
+    hostgender == "female" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 26.9 ~ "yes")) |>
   filter(host_smoke == "Current") |>
   mutate(disease_alc_status = paste(disease_status, host_alc_category, sep = ":"))
 
@@ -71,9 +71,9 @@ meta_cpsII <- meta_cpsII |>
   filter((hostgender == "female" & host_ETHA_GRAMS_PER_DAY <= 26.9) |
            (hostgender == "male" & host_ETHA_GRAMS_PER_DAY <= 53.8)) |>
   mutate(host_alc_category = case_when(
-    host_ETHA_GRAMS_PER_DAY == 0 ~ "no_risk",
-    hostgender == "male" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 53.8 ~ "low_risk",
-    hostgender == "female" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 26.9 ~ "low_risk")) |>
+    host_ETHA_GRAMS_PER_DAY == 0 ~ "no",
+  hostgender == "male" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 53.8 ~ "yes",
+    hostgender == "female" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 26.9 ~ "yes")) |>
   filter(host_smoke == "Current") |>
   mutate(disease_alc_status = paste(disease_status, host_alc_category, sep = ":"))
 
@@ -134,9 +134,9 @@ cpsII_rare <- rarefy_even_depth(CPSII_nolow, rngseed = 1, sample.size = 2664)
 
 ### Creating labels and palette list ###
 palette <- c("#FC8D62FF", "#8DA0CBFF", "#E78AC3FF", "#A6D854FF")
-label <- c("Case:low_risk" = "Cancer, Low Risk", 
-           "Case:no_risk" = "Cancer, No Risk", 
-           "Control:low_risk" = "No Cancer, Low Risk", 
-           "Control:no_risk" = "No Cancer, No Risk")
+label <- c("Case:yes" = "Cancer, Yes", 
+           "Case:no" = "Cancer, No", 
+           "Control:yes" = "No Cancer, Yes", 
+           "Control:no" = "No Cancer, No")
 
 save(plco_rare, cpsII_rare, CPSII, PLCO, palette, label, file = "phylseq_files.RData")
