@@ -17,7 +17,7 @@ DESEQ_PLCO <- DESeq(PLCO_deseq)
 
 # get the DESeq result, while Control:no_risk is the reference and Case:low_risk is treatment group
 DESeq_PLCO_res <- results(DESEQ_PLCO, tidy=TRUE,
-                     contrast = c("disease_alc_status", "Case:low_risk", "Control:no_risk"))
+                     contrast = c("disease_alc_status", "Case:yes", "Control:no"))
 view(DESeq_PLCO_res)
 
 
@@ -62,7 +62,7 @@ DESEQ_CPSII <- DESeq(CPSII_deseq)
 
 # get the DESeq result, while Control:no_risk is the reference and Case:low_risk is treatment group
 DESeq_CPSII_res <- results(DESEQ_CPSII, tidy=TRUE,
-               contrast = c("disease_alc_status", "Case:low_risk", "Control:no_risk"))
+               contrast = c("disease_alc_status", "Case:yes", "Control:no"))
 view(DESeq_CPSII_res)
 
 # get table of significant ASVs

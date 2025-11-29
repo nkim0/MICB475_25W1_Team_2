@@ -71,9 +71,9 @@ ISA_cpsII_plot <- ggplot(melted_cpsII, aes(x = disease_alc_status, y = Abundance
   geom_jitter(width = 0.1, alpha = 0.5) +
   facet_wrap(~ Genus, scales = "free_y") +
   labs(
-    x = "Cancer and Alcohol Status",
+    x = "Cancer and Alcohol Consumption",
     y = "Relative Abundance",
-    fill = "Cancer and Alcohol Status") +
+    fill = "Cancer and Alcohol Consumption") +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         strip.background = element_blank()) +
@@ -87,3 +87,6 @@ ggsave("ISA_PLCO.png",
 ggsave("ISA_CPSII.png",
        ISA_cpsII_plot,
        height = 4, width = 6)
+
+# save isa results
+save(isa_res,isa_cpsII_res, file="ISA.RData")

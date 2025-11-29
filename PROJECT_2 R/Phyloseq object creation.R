@@ -72,7 +72,7 @@ meta_cpsII <- meta_cpsII |>
            (hostgender == "male" & host_ETHA_GRAMS_PER_DAY <= 53.8)) |>
   mutate(host_alc_category = case_when(
     host_ETHA_GRAMS_PER_DAY == 0 ~ "no",
-  hostgender == "male" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 53.8 ~ "yes",
+    hostgender == "male" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 53.8 ~ "yes",
     hostgender == "female" & host_ETHA_GRAMS_PER_DAY > 0 & host_ETHA_GRAMS_PER_DAY <= 26.9 ~ "yes")) |>
   filter(host_smoke == "Current") |>
   mutate(disease_alc_status = paste(disease_status, host_alc_category, sep = ":"))
@@ -132,6 +132,13 @@ CPSII_nolow <- filter_taxa(CPSII_filt, function(x) sum(x)>5, prune = TRUE)
 rarecurve(t(as.data.frame(otu_table(CPSII_nolow))), cex=0.1)
 cpsII_rare <- rarefy_even_depth(CPSII_nolow, rngseed = 1, sample.size = 2664)
 
+# Agglomerate at genus level and convert to relative abundance
+PLCO_genus <- tax_glom(plco_rare, taxrank = "Genus", NArm = FALSE)
+PLCO_genus_RA <- transform_sample_counts(PLCO_genus, fun=function(x) x/sum(x))
+
+CPSII_genus <- tax_glom(cpsII_rare, taxrank = "Genus", NArm = FALSE)
+CPSII_genus_RA <- transform_sample_counts(CPSII_genus, fun=function(x) x/sum(x))
+
 ### Creating labels and palette list ###
 palette <- c("#FC8D62FF", "#8DA0CBFF", "#E78AC3FF", "#A6D854FF")
 label <- c("Case:yes" = "Cancer, Yes", 
@@ -139,4 +146,4 @@ label <- c("Case:yes" = "Cancer, Yes",
            "Control:yes" = "No Cancer, Yes", 
            "Control:no" = "No Cancer, No")
 
-save(plco_rare, cpsII_rare, CPSII, PLCO, palette, label, file = "phylseq_files.RData")
+save(plco_rare, cpsII_rare, CPSII, PLCO, palette, label,PLCO_genus, CPSII_genus, file = "phylseq_files.RData")

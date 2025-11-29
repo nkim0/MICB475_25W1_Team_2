@@ -10,68 +10,69 @@ print(levels(as.factor(sample_data(plco_rare)$disease_alc_status)))
 
 ### AIM 2.1: Core Microbiome ###
 # set thersholds
-prev_threshold <- 0.3
-abund_threshold <- 0.001
+prev_threshold <- 0.4
+abund_threshold <- 0.0001
+
+# 1. Agglomerate at genus level
+plco_genus_unrare <- tax_glom(PLCO, taxrank = "Genus", NArm = FALSE)
 
 # transform data to relative abundance
-plco_rel <- transform_sample_counts(PLCO, fun = function(x) x/sum(x))
+plco_rel <- transform_sample_counts(plco_genus_unrare, fun = function(x) x/sum(x))
 
 # subset dataset into 4 groups from training data
-cancer_low_risk <- subset_samples(plco_rel, disease_alc_status == "Case:low_risk")
-cancer_no_risk <- subset_samples(plco_rel, disease_alc_status == "Case:no_risk")
-control_low_risk <- subset_samples(plco_rel, disease_alc_status == "Control:low_risk")
-control_no_risk <- subset_samples(plco_rel, disease_alc_status == "Control:no_risk")
+cancer_yes_alc <- subset_samples(plco_rel, disease_alc_status == "Case:yes")
+cancer_no_alc <- subset_samples(plco_rel, disease_alc_status == "Case:no")
+control_yes_alc <- subset_samples(plco_rel, disease_alc_status == "Control:yes")
+control_no_alc <- subset_samples(plco_rel, disease_alc_status == "Control:no")
 
 #detect the core microbiome for each group
-core_cancer_low_risk <- core_members(cancer_low_risk, detection = abund_threshold, prevalence = prev_threshold)
-core_cancer_no_risk <- core_members(cancer_no_risk, detection = abund_threshold, prevalence = prev_threshold)
-core_control_low_risk <- core_members(control_low_risk, detection = abund_threshold, prevalence = prev_threshold)
-core_control_no_risk <- core_members(control_no_risk, detection = abund_threshold, prevalence = prev_threshold)
+core_cancer_yes_alc <- core_members(cancer_yes_alc, detection = abund_threshold, prevalence = prev_threshold)
+core_cancer_no_alc <- core_members(cancer_no_alc, detection = abund_threshold, prevalence = prev_threshold)
+core_control_yes_alc <- core_members(control_yes_alc, detection = abund_threshold, prevalence = prev_threshold)
+core_control_no_alc <- core_members(cancer_no_alc, detection = abund_threshold, prevalence = prev_threshold)
 
 # plot the core microbiome
 core_microbiome_plot <- ggVennDiagram(x=list(
-  "Cancer, Low Risk" = core_cancer_low_risk,
-  "Cancer, No Risk" = core_cancer_no_risk,
-  "No Cancer, Low Risk" = core_control_low_risk,
-  "No Cancer, No Risk" = core_control_no_risk
+  "Cancer, Yes" = core_cancer_yes_alc,
+  "Cancer, No" = core_cancer_no_alc,
+  "No Cancer, Yes" = core_control_yes_alc,
+  "No Cancer, No" = core_control_no_alc
 ),label_alpha = 0, set_size=4) +
   ggplot2::scale_fill_distiller(direction = 1) +
   theme_void() +
-  scale_x_continuous(expand = expansion(mult = 0.2))
+  scale_x_continuous(expand = expansion(mult = 0.2)) +
+  labs(title = "Core Microbiome Venn Diagram (prevalence > 40% & abundance > 0.01%)")
 core_microbiome_plot
 
-# Check number of samples for all 4 subsetted groups
-print(paste("NoRisk_NoCancer n=", nsamples(cancer_low_risk)))
-print(paste("NoRisk_Cancer n=", nsamples(cancer_no_risk)))
-print(paste("HighRisk_NoCancer n=", nsamples(control_low_risk)))
-print(paste("HighRisk_Cancer n=", nsamples(control_no_risk)))
+# 1. Agglomerate at genus level
+cpsII_genus_unrare <- tax_glom(CPSII, taxrank = "Genus", NArm = FALSE)
 
-
-# transform data to relative abundance for test data
-cpsII_rel <- transform_sample_counts(CPSII, fun = function(x) x/sum(x))
+# transform data to relative abundance
+cpsII_rel <- transform_sample_counts(cpsII_genus_unrare, fun = function(x) x/sum(x))
 
 # subset dataset into 4 groups from testing data
-test_cancer_low_risk <- subset_samples(cpsII_rel, disease_alc_status == "Case:low_risk")
-test_cancer_no_risk <- subset_samples(cpsII_rel, disease_alc_status == "Case:no_risk")
-test_control_low_risk <- subset_samples(cpsII_rel, disease_alc_status == "Control:low_risk")
-test_control_no_risk <- subset_samples(cpsII_rel, disease_alc_status == "Control:no_risk")
+test_cancer_yes <- subset_samples(cpsII_rel, disease_alc_status == "Case:yes")
+test_cancer_no <- subset_samples(cpsII_rel, disease_alc_status == "Case:no")
+test_control_yes <- subset_samples(cpsII_rel, disease_alc_status == "Control:yes")
+test_control_no <- subset_samples(cpsII_rel, disease_alc_status == "Control:no")
 
 #detect the core microbiome for each group
-test_core_cancer_low_risk <- core_members(test_cancer_low_risk, detection = abund_threshold, prevalence = prev_threshold)
-test_core_cancer_no_risk <- core_members(test_cancer_no_risk, detection = abund_threshold, prevalence = prev_threshold)
-test_core_control_low_risk <- core_members(test_control_low_risk, detection = abund_threshold, prevalence = prev_threshold)
-test_core_control_no_risk <- core_members(test_control_no_risk, detection = abund_threshold, prevalence = prev_threshold)
+test_core_cancer_yes <- core_members(test_cancer_yes, detection = abund_threshold, prevalence = prev_threshold)
+test_core_cancer_no <- core_members(test_cancer_no, detection = abund_threshold, prevalence = prev_threshold)
+test_core_control_yes <- core_members(test_control_yes, detection = abund_threshold, prevalence = prev_threshold)
+test_core_control_no <- core_members(test_control_no, detection = abund_threshold, prevalence = prev_threshold)
 
 # plot the core microbiome
 test_microbiome_plot <- ggVennDiagram(x=list(
-  "Cancer, Low Risk" = test_core_cancer_low_risk,
-  "Cancer, No Risk" = test_core_cancer_no_risk,
-  "No Cancer, Low Risk" = test_core_control_low_risk,
-  "No Cancer, No Risk" = test_core_control_no_risk
+  "Cancer, Yes" = test_core_cancer_yes,
+  "Cancer, No" = test_core_cancer_no,
+  "No Cancer, Yes" = test_core_control_yes,
+  "No Cancer, No" = test_core_control_no
 ),label_alpha = 0, set_size=4) +
   ggplot2::scale_fill_distiller(direction = 1) +
   theme_void() +
-  scale_x_continuous(expand = expansion(mult = 0.2))
+  scale_x_continuous(expand = expansion(mult = 0.2)) +
+  labs(title = "Core Microbiome Venn Diagram (prevalence > 40% & abundance > 0.01%)")
 test_microbiome_plot
 
 # save plots
