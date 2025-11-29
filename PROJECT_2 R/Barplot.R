@@ -1,6 +1,7 @@
 library(phyloseq)
 library(tidyverse)
 library(ggplot2)
+library(pals)
 
 # load objects
 load(file = "phylseq_files.RData")
@@ -31,23 +32,24 @@ average_abund <- rel_abund %>%
 
 # rename Genus under 1% as "<1%
 avg_modified <- average_abund
-avg_modified$Genus[avg_modified$OTU %in% to_change] <- '<1%'
-
+avg_modified$Genus[avg_modified$OTU %in% to_change] <- 'others (<1%)'
 
 # Plot taxonomy graph at genus level with disease_alc_status on X-axis
 tax_barplot <- avg_modified|> 
   mutate(Genus = str_remove(Genus, "^g__")) |>
+  mutate(Genus = fct_relevel(Genus, "others (<1%)")) |>
   filter(!is.na(Genus)) |>
   ggplot(aes(disease_alc_status, Abundance, fill=Genus)) +
   geom_col(position='stack') +
   labs(
-    x = "Cancer and Alcohol Consumption",
+    x = "Cancer Status: Alcohol Consumption",
     y = "Relative Abundance",
     fill = "Genus") +
-  theme_classic()
+  theme_classic() +
+  scale_fill_manual(values = as.vector(stepped()))
 tax_barplot
 
 # save plots
 ggsave("plco_genus_barplot.png",
        tax_barplot,
-       height = 6, width = 8)
+       height = 5, width = 7)
