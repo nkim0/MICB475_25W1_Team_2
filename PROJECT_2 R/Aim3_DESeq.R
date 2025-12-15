@@ -145,7 +145,7 @@ gg_PLCO_barplot_3
 ggsave("DESeq_PLCO_ctno,csyes.png",
        gg_PLCO_barplot_1,
        height = 4, width = 6)
-ggsave("DESeq_PLCO_ctno,ctno,csno.png",
+ggsave("DESeq_PLCO_ctno,csno.png",
        gg_PLCO_barplot_2,
        height = 4, width = 6)
 ggsave("DESeq_PLCO_ctno,ctyes.png",
