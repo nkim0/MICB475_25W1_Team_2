@@ -95,7 +95,6 @@ PLCO_merged_results_3 <- tax_table(PLCO_plus1) |>
   filter(!str_detect(Genus, "^NA"))
 
 # Make DESeq volcano plots
-
 vol_plot_1 <- DESeq_PLCO_res_1 |>
   mutate(Significance = case_when(padj < 0.01 & abs(log2FoldChange) > 2 ~ "Significant", TRUE ~ "Not Significant")) |>
   ggplot() +

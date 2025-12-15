@@ -83,7 +83,7 @@ peb_1
 peb_2
 peb_3
 
-
+#creation of data table of potential functional differences 
 combined_data_annotated_results_df <- bind_rows(data_annotated_results_df_1, data_annotated_results_df_3)
 
 
