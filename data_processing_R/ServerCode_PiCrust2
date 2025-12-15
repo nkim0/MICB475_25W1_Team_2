@@ -1,0 +1,24 @@
+# move to right directory
+cd /data/smoking_data_plco
+
+# make picrust directory
+mkdir picrust
+
+# create files for picrust
+qiime tools export \
+   --input-path filtered-feature-table_plco.qza \
+   --output-path picrust
+
+qiime tools export \
+   --input-path rep-seqs_plco.qza \
+   --output-path picrust
+
+# change enviroment to picrust2
+conda deactivate
+conda activate picrust2
+
+# generate picrust output files
+picrust2_pipeline.py \
+   -s picrust/dna-sequences.fasta \
+   -i picrust/feature-table.biom \
+   -o picrust_out
