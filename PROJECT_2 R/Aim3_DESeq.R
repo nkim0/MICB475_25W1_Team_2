@@ -96,13 +96,13 @@ vol_plot_1 <- DESeq_PLCO_res_1 |>
   geom_point(aes(x = log2FoldChange, y = -log10(padj), col = Significance)) +
   theme_classic()
 
-vol_plot_2 <- DESeq_PLCO_res_1 |>
+vol_plot_2 <- DESeq_PLCO_res_2 |>
   mutate(Significance = case_when(padj < 0.01 & abs(log2FoldChange) > 2 ~ "Significant", TRUE ~ "Not Significant")) |>
   ggplot() +
   geom_point(aes(x = log2FoldChange, y = -log10(padj), col = Significance)) +
   theme_classic()
 
-vol_plot_3 <- DESeq_PLCO_res_1 |>
+vol_plot_3 <- DESeq_PLCO_res_3 |>
   mutate(Significance = case_when(padj < 0.01 & abs(log2FoldChange) > 2 ~ "Significant", TRUE ~ "Not Significant")) |>
   ggplot() +
   geom_point(aes(x = log2FoldChange, y = -log10(padj), col = Significance)) +
