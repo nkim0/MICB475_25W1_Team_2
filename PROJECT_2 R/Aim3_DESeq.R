@@ -65,6 +65,8 @@ PLCO_merged_results_1 <- tax_table(PLCO_plus1) |>
   as.data.frame()|>
   rownames_to_column(var="ASV") %>%
   right_join(PLCO_sigASVs_1) %>%
+  arrange(padj) |>
+  slice_head(n = 25) |>
   arrange(log2FoldChange) %>%
   mutate(Genus = make.unique(Genus)) %>%
   mutate(Genus = factor(Genus, levels=unique(Genus))) |>
@@ -74,6 +76,8 @@ PLCO_merged_results_2 <- tax_table(PLCO_plus1) |>
   as.data.frame()|>
   rownames_to_column(var="ASV") %>%
   right_join(PLCO_sigASVs_2) %>%
+  arrange(padj) |>
+  slice_head(n = 25) |>
   arrange(log2FoldChange) %>%
   mutate(Genus = make.unique(Genus)) %>%
   mutate(Genus = factor(Genus, levels=unique(Genus))) |>
@@ -83,6 +87,8 @@ PLCO_merged_results_3 <- tax_table(PLCO_plus1) |>
   as.data.frame()|>
   rownames_to_column(var="ASV") %>%
   right_join(PLCO_sigASVs_3) %>%
+  arrange(padj) |>
+  slice_head(n = 25) |>
   arrange(log2FoldChange) %>%
   mutate(Genus = make.unique(Genus)) %>%
   mutate(Genus = factor(Genus, levels=unique(Genus))) |>
