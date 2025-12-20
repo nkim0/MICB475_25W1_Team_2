@@ -8,7 +8,8 @@ load(file = "phylseq_files.RData")
 rich_plot_plco <- plot_richness(PLCO_genus, x="disease_alc_status", measures=c("Observed", "Shannon")) +
   geom_boxplot(aes(fill = disease_alc_status)) +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        strip.text = element_text(size = 10, face = "bold")) +
   labs(
     x = "Cancer and Alcohol Consumption",
     y = "Alpha Diversity Measure",
