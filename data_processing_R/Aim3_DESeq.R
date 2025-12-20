@@ -7,7 +7,7 @@ library(DESeq2)
 load(file = "phylseq_files.RData")
 
 # get the name of each analysis group
-print(levels(as.factor(sample_data(cpsII_rare)$disease_alc_status)))
+print(levels(as.factor(sample_data(plco_rare)$disease_alc_status)))
 
 ### AIM 3: Differential Abundance ###
 # transform PLCO to have +1 count and change to DESeq object
@@ -119,21 +119,21 @@ gg_PLCO_barplot_1 <- PLCO_merged_results_1 |>
   geom_bar(aes(x=Genus, y=log2FoldChange), stat="identity")+
   theme_classic() +
   geom_errorbar(aes(x=Genus, ymin=log2FoldChange-lfcSE, ymax=log2FoldChange+lfcSE,)) +
-  theme(axis.text.x = element_text(angle=60, hjust=1, size=7)) +
+  theme(axis.text.x = element_text(angle=70, hjust=1, size=10)) +
   labs(y="Log2 Fold Change")
 
 gg_PLCO_barplot_2 <- ggplot(PLCO_merged_results_2) +
   geom_bar(aes(x=Genus, y=log2FoldChange), stat="identity")+
   theme_classic() +
   geom_errorbar(aes(x=Genus, ymin=log2FoldChange-lfcSE, ymax=log2FoldChange+lfcSE)) +
-  theme(axis.text.x = element_text(angle=60, hjust=1, size=7)) +
+  theme(axis.text.x = element_text(angle=70, hjust=1, size=10)) +
   labs(y="Log2 Fold Change")
 
 gg_PLCO_barplot_3 <- ggplot(PLCO_merged_results_3) +
   geom_bar(aes(x=Genus, y=log2FoldChange), stat="identity")+
   theme_classic() +
   geom_errorbar(aes(x=Genus, ymin=log2FoldChange-lfcSE, ymax=log2FoldChange+lfcSE)) +
-  theme(axis.text.x = element_text(angle=60, hjust=1, size=7)) +
+  theme(axis.text.x = element_text(angle=70, hjust=1, size=10)) +
   labs(y="Log2 Fold Change")
 
 
@@ -147,23 +147,23 @@ gg_PLCO_barplot_2
 gg_PLCO_barplot_3
 
 # save plots
-ggsave("DESeq_PLCO_ctno,csyes.png",
-       gg_PLCO_barplot_1,
-       height = 4, width = 6)
-ggsave("DESeq_PLCO_ctno,csno.png",
-       gg_PLCO_barplot_2,
-       height = 4, width = 6)
-ggsave("DESeq_PLCO_ctno,ctyes.png",
-       gg_PLCO_barplot_3,
-       height = 4, width = 6)
-
-ggsave("DESeq_PLCO_vol_ctno,csyes.png",
-       vol_plot_1,
-       height = 4, width = 6)
-ggsave("DESeq_PLCO_vol_ctno,csno.png",
-       vol_plot_2,
-       height = 4, width = 6)
-ggsave("DESeq_PLCO_vol_ctno,ctyes.png",
-       vol_plot_3,
-       height = 4, width = 6)
+  ggsave("DESeq_PLCO_ctno,csyes.png",
+         gg_PLCO_barplot_1,
+         height = 5, width = 7.5)
+  ggsave("DESeq_PLCO_ctno,csno.png",
+         gg_PLCO_barplot_2,
+         height = 5, width = 7.5)
+  ggsave("DESeq_PLCO_ctno,ctyes.png",
+         gg_PLCO_barplot_3,
+         height = 5, width = 7.5)
+  
+  ggsave("DESeq_PLCO_vol_ctno,csyes.png",
+         vol_plot_1,
+         height = 4, width = 6)
+  ggsave("DESeq_PLCO_vol_ctno,csno.png",
+         vol_plot_2,
+         height = 4, width = 6)
+  ggsave("DESeq_PLCO_vol_ctno,ctyes.png",
+         vol_plot_3,
+         height = 4, width = 6)
 
